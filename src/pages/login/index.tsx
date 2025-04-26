@@ -54,9 +54,10 @@ function Login() {
           id="password"
           name="password"
           type="password"
-          label="password"
+          label="Password"
           value={formData.password}
           onChange={handleChange}
+          canTogglePassword
         />
         <div className="mt-6">
           <SubmitButton isLoading={isLoading} text="Sign in" />

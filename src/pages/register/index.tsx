@@ -77,6 +77,7 @@ function Register() {
           type="password"
           value={formData.password}
           onChange={handleChange}
+          canTogglePassword
         />
         <InputField
           id="password_confirmation"
@@ -85,6 +86,7 @@ function Register() {
           type="password"
           value={formData.password_confirmation}
           onChange={handleChange}
+          canTogglePassword
         />
 
         {error && <p className="mt-2 text-sm text-red-500">{error}</p>}

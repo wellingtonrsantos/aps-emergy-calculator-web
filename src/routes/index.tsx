@@ -3,6 +3,7 @@ import App from "../App";
 import Home from "../pages/home";
 import Login from "../pages/login";
 import Register from "../pages/register";
+import CalculateEmergy from "../pages/calculate-emergy";
 
 export default function AppRoutes() {
   return (
@@ -11,6 +12,7 @@ export default function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="calculate" element={<CalculateEmergy />} />
       </Route>
     </Routes>
   );
