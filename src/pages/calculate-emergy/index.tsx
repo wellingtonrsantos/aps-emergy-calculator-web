@@ -1,22 +1,35 @@
-import { useState } from "react";
-import FileUpload from "../../components/FileUpload";
+import FileUpload from "@/components/FileUpload";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 function CalculateEmergy() {
-  const [fileName, setFileName] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleFileAccepted = (file: File) => {
-    setFileName(file.name);
-    console.log("Arquivo recebido:", file);
-  };
+  useEffect(() => {
+    if (location.state?.registered) {
+      toast.success("Cadastro realizado com sucesso!");
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location, navigate]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
-      <h1 className="mb-6 text-2xl font-bold">Calcular Emergia</h1>
-      <h2 className="mb-6 text-2xl font-bold">Importar Arquivo</h2>
-      <FileUpload onFileAccepted={handleFileAccepted} />
-      {fileName && (
-        <p className="mt-4 text-green-600">Arquivo aceito: {fileName}</p>
-      )}
+    <div className="min-h-screen bg-green-50/20">
+      <main className="container mx-auto px-4 pt-24 pb-10">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-8 text-center">
+            <h1 className="mb-3 text-3xl font-bold text-green-900">
+              Calculadora de Emergia
+            </h1>
+            <p className="text-green-700">
+              Importe seu arquivo CSV ou Excel para começar a análise
+            </p>
+          </div>
+
+          <FileUpload />
+        </div>
+      </main>
     </div>
   );
 }

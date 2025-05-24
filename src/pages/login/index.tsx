@@ -4,6 +4,10 @@ import {
   InputField,
   SubmitButton,
 } from "../../components/register";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
+import { useAxiosErrorHandler } from "@/hooks/useAxiosErrorHandler";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -11,7 +15,11 @@ function Login() {
     password: "",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const handleError = useAxiosErrorHandler();
+
+  const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
+  const { isLoading: redirectLoading } = useRedirectIfAuthenticated();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -20,19 +28,24 @@ function Login() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Login data: ", formData);
 
-    // Chamada a api simulada!
-    setIsLoading(true);
-    setTimeout(() => {
-      alert(
-        `Mock login com:\nEmail: ${formData.email}\nSenha: ${formData.password}`,
-      );
-      setIsLoading(false);
-    }, 1000);
+    try {
+      await login(formData);
+      navigate("/", { replace: true });
+    } catch (error) {
+      handleError(error);
+    }
   };
+
+  if (redirectLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <AuthFormWrapper
