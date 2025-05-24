@@ -3,7 +3,11 @@ import { Upload, FileText, FileX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-const FileUpload = () => {
+interface FileUploadProps {
+  onFileChange?: (file: File | null) => void;
+}
+
+const FileUpload = ({ onFileChange }: FileUploadProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -40,6 +44,7 @@ const FileUpload = () => {
 
     if (validExtensions.includes(fileExtension)) {
       setFile(file);
+      onFileChange?.(file);
       toast.success("Arquivo importado com sucesso", {
         description: `Nome do arquivo: ${file.name}`,
       });
@@ -54,6 +59,7 @@ const FileUpload = () => {
   const handleRemoveFile = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setFile(null);
+    onFileChange?.(null);
     toast.success("Arquivo removido", {
       description: "O arquivo foi removido com sucesso",
     });

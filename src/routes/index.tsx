@@ -4,7 +4,8 @@ import App from "@/App";
 import Home from "@/pages/home";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
-import CalculateEmergy from "@/pages/calculate-emergy";
+import CalculateEmergyByFile from "@/pages/calculate-emergy-by-file";
+import CalculateEmergyByLCI from "@/pages/calculate-emergy-by-lci";
 
 export default function AppRoutes() {
   return (
@@ -21,10 +22,18 @@ export default function AppRoutes() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route
-          path="calculate"
+          path="calculate-by-file"
           element={
             <ProtectedRoute>
-              <CalculateEmergy />
+              <CalculateEmergyByFile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="calculate-by-lci"
+          element={
+            <ProtectedRoute>
+              <CalculateEmergyByLCI />
             </ProtectedRoute>
           }
         />
