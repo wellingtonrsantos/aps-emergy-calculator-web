@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Leaf, BarChart3, CheckCircle } from "lucide-react";
+import { FileText, Package, Leaf, BarChart3, CheckCircle } from "lucide-react";
 import { CalculationResult } from "@/types/calculate";
 
 interface ResultsDisplayProps {
@@ -40,7 +40,9 @@ const ResultsDisplay = ({ result }: ResultsDisplayProps) => {
   const formatValue = (value: string) => {
     // Converter notação científica para formato mais legível
     const num = parseFloat(value);
-    if (num >= 1000000) {
+    if (num >= 1000000000) {
+      return `${(num / 1000000000).toFixed(2)}B`;
+    } else if (num >= 1000000) {
       return `${(num / 1000000).toFixed(2)}M`;
     } else if (num >= 1000) {
       return `${(num / 1000).toFixed(2)}K`;
@@ -48,17 +50,24 @@ const ResultsDisplay = ({ result }: ResultsDisplayProps) => {
     return num.toString();
   };
 
+  const isProductCalculation = !!result.product_id;
+  const HeaderIcon = isProductCalculation ? Package : FileText;
+  const sourceLabel = isProductCalculation ? "Produto" : "Arquivo";
+  const sourceValue = isProductCalculation
+    ? result.product_name
+    : result.filename;
+
   return (
-    <div className="animate-fade-in space-y-6">
+    <div className="animate-fade-in space-y-6" id="calculation-results">
       {/* Header com nome do arquivo */}
       <Card className="border-green-200">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-xl text-green-800">
-            <FileText className="h-5 w-5" />
+            <HeaderIcon className="h-5 w-5" />
             Resultados do Cálculo
           </CardTitle>
           <p className="text-sm text-green-600">
-            Arquivo: <span className="font-medium">{result.filename}</span>
+            {sourceLabel}: <span className="font-medium">{sourceValue}</span>
           </p>
         </CardHeader>
       </Card>

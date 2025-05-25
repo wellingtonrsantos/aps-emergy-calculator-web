@@ -1,19 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator } from "lucide-react";
-
-interface Product {
-  id: string;
-  name: string;
-  description?: string;
-}
+import { Calculator, Loader2 } from "lucide-react";
+import { LCIProduct } from "@/types/lci";
 
 interface ProductCardProps {
-  product: Product;
+  product: LCIProduct;
   onClick: (id: string) => void;
+  isLoading?: boolean;
 }
 
-const ProductCard = ({ product, onClick }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  onClick,
+  isLoading = false,
+}: ProductCardProps) => {
   return (
     <Card className="group cursor-pointer border-green-200 transition-all duration-200 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg">
       <CardHeader className="pb-3">
@@ -31,10 +31,21 @@ const ProductCard = ({ product, onClick }: ProductCardProps) => {
         </p>
         <Button
           onClick={() => onClick(product.id)}
-          className="w-full bg-green-600 text-white hover:bg-green-700"
+          disabled={isLoading}
+          className="w-full bg-green-600 text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
           size="sm"
         >
-          Calcular LCI
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Calculando...
+            </>
+          ) : (
+            <>
+              <Calculator className="mr-2 h-4 w-4" />
+              Calcular LCI
+            </>
+          )}
         </Button>
       </CardContent>
     </Card>

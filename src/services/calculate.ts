@@ -23,3 +23,12 @@ export async function calculateEmergyByFile(
     filename: file.name,
   };
 }
+
+export async function calculateEmergyByLciId(
+  id: string,
+): Promise<CalculationResult> {
+  const response: AxiosResponse<CalculationResult> = await api.get(
+    `/calculate/by-lci/${Number(id)}`,
+  );
+  return response.data;
+}

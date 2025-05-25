@@ -18,7 +18,9 @@ export interface SustainabilityData {
 }
 
 export interface CalculationResult {
-  filename: string;
+  filename?: string;
+  product_id?: string;
+  product_name?: string;
   emergy: EmergyData;
   sustainability: SustainabilityData;
 }
