@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AuthFormWrapper,
   InputField,
   SubmitButton,
 } from "../../components/register";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
 import { useAxiosErrorHandler } from "@/hooks/useAxiosErrorHandler";
+import { toast } from "sonner";
 
 function Login() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.registered) {
+      toast.success("Conta criada com sucesso! Faça login.");
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location, navigate]);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,7 +29,6 @@ function Login() {
   const handleError = useAxiosErrorHandler();
 
   const { login, isLoading } = useAuth();
-  const navigate = useNavigate();
   const { isLoading: redirectLoading } = useRedirectIfAuthenticated();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

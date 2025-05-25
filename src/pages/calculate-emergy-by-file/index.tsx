@@ -17,21 +17,10 @@ import {
   FileSpreadsheet,
   Loader2,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 function CalculateEmergyByFile() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (location.state?.registered) {
-      toast.success("Cadastro realizado com sucesso!");
-      navigate(location.pathname, { replace: true });
-    }
-  }, [location, navigate]);
-
   const handleError = useAxiosErrorHandler();
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);

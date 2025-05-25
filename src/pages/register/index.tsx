@@ -66,7 +66,7 @@ function Register() {
         mobile_number: formData.mobile_number,
       });
 
-      navigate("/", { state: { registered: true } });
+      navigate("/login", { state: { registered: true } });
     } catch (error) {
       handleError(error);
     } finally {
