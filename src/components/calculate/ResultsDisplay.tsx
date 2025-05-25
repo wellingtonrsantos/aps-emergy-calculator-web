@@ -37,17 +37,21 @@ const ResultsDisplay = ({ result }: ResultsDisplayProps) => {
   const { label, className } =
     classificationMap[classificationKey] || classificationMap.DEFAULT;
 
-  const formatValue = (value: string) => {
-    // Converter notação científica para formato mais legível
-    const num = parseFloat(value);
-    if (num >= 1000000000) {
-      return `${(num / 1000000000).toFixed(2)}B`;
-    } else if (num >= 1000000) {
-      return `${(num / 1000000).toFixed(2)}M`;
-    } else if (num >= 1000) {
-      return `${(num / 1000).toFixed(2)}K`;
-    }
-    return num.toString();
+  const formatValue = (value: string | number): string => {
+    const num = typeof value === "string" ? parseFloat(value) : value;
+
+    if (isNaN(num)) return "-";
+
+    const abs = Math.abs(num);
+
+    if (abs >= 1e12) return `${(num / 1e12).toFixed(2)}T`;
+    if (abs >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
+    if (abs >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
+    if (abs >= 1e3) return `${(num / 1e3).toFixed(2)}K`;
+
+    return num.toLocaleString("pt-BR", {
+      maximumFractionDigits: 2,
+    });
   };
 
   const isProductCalculation = !!result.product_id;
@@ -167,7 +171,7 @@ const ResultsDisplay = ({ result }: ResultsDisplayProps) => {
                 Recursos Não Renováveis (F)
               </span>
               <span className="text-lg font-semibold text-blue-800">
-                {formatValue(result.emergy.F.value)} {result.emergy.F.unit}
+                {formatValue(result.emergy.F?.value)} {result.emergy.F?.unit}
               </span>
             </div>
 
@@ -176,7 +180,7 @@ const ResultsDisplay = ({ result }: ResultsDisplayProps) => {
                 Recursos Naturais (N)
               </span>
               <span className="text-lg font-semibold text-orange-800">
-                {formatValue(result.emergy.N.value)} {result.emergy.N.unit}
+                {formatValue(result.emergy.N?.value)} {result.emergy.N?.unit}
               </span>
             </div>
 
@@ -185,7 +189,7 @@ const ResultsDisplay = ({ result }: ResultsDisplayProps) => {
                 Recursos Renováveis (R)
               </span>
               <span className="text-lg font-semibold text-green-800">
-                {formatValue(result.emergy.R.value)} {result.emergy.R.unit}
+                {formatValue(result.emergy.R?.value)} {result.emergy.R?.unit}
               </span>
             </div>
           </div>

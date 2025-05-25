@@ -29,7 +29,7 @@ function AuthFormWrapper({
           Or{" "}
           <Link
             to={altLink}
-            className="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:underline focus:outline-none"
+            className="font-medium text-green-700 transition duration-150 ease-in-out hover:text-green-600 focus:underline focus:outline-none"
           >
             {altText}
           </Link>

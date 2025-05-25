@@ -11,8 +11,8 @@ function SubmitButton({ isLoading, text }: SubmitButtonProps) {
         disabled={isLoading}
         className={`focus:shadow-outline-indigo flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out focus:outline-none ${
           isLoading
-            ? "cursor-not-allowed bg-blue-300"
-            : "cursor-pointer bg-blue-500 hover:bg-blue-600 focus:border-indigo-700 active:bg-indigo-700"
+            ? "cursor-not-allowed bg-green-300"
+            : "cursor-pointer bg-green-500 hover:bg-green-600 focus:border-green-700 active:bg-green-700"
         }`}
       >
         {isLoading ? (
