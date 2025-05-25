@@ -1,5 +1,5 @@
 // 10. Header Atualizado (components/Header.tsx)
-import { Calculator, FileText, Home, LogOut } from "lucide-react";
+import { Calculator, Upload, Home, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -55,7 +55,7 @@ const Header = () => {
                     : ""
                 }`}
               >
-                <FileText className="mr-2 h-4 w-4" />
+                <Upload className="mr-2 h-4 w-4" />
                 Importar Arquivo
               </Button>
             </Link>
